@@ -24,8 +24,12 @@ export class MackerelAnnotatorApp extends App {
 
     const { env } = props;
 
-    new LambdaStack(this, "ecs-service-events-mackerel-annotator-lambda", {
-      env,
-    });
+    new LambdaStack(
+      this,
+      "sandbox-ecs-service-events-mackerel-annotator-lambda",
+      {
+        env,
+      }
+    );
   }
 }
