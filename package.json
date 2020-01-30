@@ -1,9 +1,10 @@
 {
-  "name": "ecs-service-events-mackerel-annotator",
+  "name": "@aereal/cdk-ecs-task-retirement-events-mackerel-annotator",
   "version": "1.0.0",
   "main": "built/index.js",
   "types": "built/index.d.ts",
   "author": "aereal <aereal@aereal.org>",
+  "repository": "https://github.com/aereal/cdk-ecs-task-retirement-events-mackerel-annotator",
   "license": "MIT",
   "devDependencies": {
     "@aws-cdk/assert": "^1.22.0",
