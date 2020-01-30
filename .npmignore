@@ -1,0 +1,4 @@
+*
+!built/**/*.js
+!built/**/*.d.ts
+!dist/annotator/annotator
