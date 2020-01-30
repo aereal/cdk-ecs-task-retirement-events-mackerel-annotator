@@ -86,10 +86,11 @@ func annotator(ctx context.Context, ev *events.CloudWatchEvent) error {
 	}
 	log.Printf("found service role: %#v", serviceRole)
 
+	reason := determineStopReason(stateChangeEvent)
 	client := mackerel.NewClient(mackerelAPIKey)
 	annotation := &mackerel.GraphAnnotation{
 		Title:       fmt.Sprintf("Task %s stopped", stateChangeEvent.TaskArn),
-		Description: fmt.Sprintf("Reason: %q", stateChangeEvent.StoppedReason),
+		Description: fmt.Sprintf("Reason: %q", reason),
 		From:        stateChangeEvent.StoppingAt.Unix(),
 		To:          stateChangeEvent.StoppingAt.Unix(),
 		Roles:       serviceRole.Roles,
@@ -101,6 +102,22 @@ func annotator(ctx context.Context, ev *events.CloudWatchEvent) error {
 	}
 
 	return nil
+}
+
+var codeEssentialContainerExited = "EssentialContainerExited"
+
+func determineStopReason(detail EcsTaskStateChangeEvent) string {
+	if detail.StopCode == codeEssentialContainerExited {
+		var reason string
+		for _, container := range detail.Containers {
+			// we should check container is essential but CW Events payload have no information about essential-ness
+			if container.ExitCode != 0 {
+				return container.Reason
+			}
+		}
+		return reason
+	}
+	return detail.StoppedReason
 }
 
 type mackerelRole struct {
@@ -137,12 +154,15 @@ type Container struct {
 	TaskArn           string             `json:"taskArn"`
 	NetworkInterfaces []NetworkInterface `json:"networkInterfaces"`
 	CPU               string             `json:"cpu"`
+	ExitCode          int                `json:"exitCode"`
+	Reason            string             `json:"reason"`
 }
 
 type EcsTaskStateChangeEvent struct {
 	Attachments       []TaskAttachment `json:"attachments"`
 	AvailabilityZone  string           `json:"availabilityZone"`
 	ClusterArn        string           `json:"clusterArn"`
+	Containers        []Container      `json:"containers"`
 	CreatedAt         time.Time        `json:"createdAt"`
 	LaunchType        string           `json:"launchType"`
 	CPU               string           `json:"cpu"`
@@ -161,6 +181,7 @@ type EcsTaskStateChangeEvent struct {
 	Version           int              `json:"version"`
 	PlatformVersion   string           `json:"platformVersion"`
 	StoppedReason     string           `json:"stoppedReason"`
+	StopCode          string           `json:"stopCode"`
 	StoppingAt        time.Time        `json:"stoppingAt"`
 	StoppedAt         time.Time        `json:"stoppedAt"`
 }
