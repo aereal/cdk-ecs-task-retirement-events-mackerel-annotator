@@ -8,10 +8,12 @@ import {
 } from "@aws-cdk/aws-lambda";
 import { Rule } from "@aws-cdk/aws-events";
 import { LambdaFunction as InvokeLambdaFunction } from "@aws-cdk/aws-events-targets";
+import { IStringParameter } from "@aws-cdk/aws-ssm";
 
 interface EcsServiceEventsMackerelAnnotatorProps extends ResourceProps {
   readonly functionProps?: Omit<FunctionProps, "code" | "handler" | "runtime">;
   readonly clusterArnsToWatch?: string[];
+  readonly mackerelApiKey: IStringParameter;
 }
 
 export class EcsServiceEventsMackerelAnnotator extends Resource {
@@ -22,7 +24,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
   ) {
     super(scope, id, props);
 
-    const { functionProps, clusterArnsToWatch } = props;
+    const { functionProps, clusterArnsToWatch, mackerelApiKey } = props;
 
     const lambdaPath = resolve(
       join(__dirname, "..", "..", "dist", "annotator")
@@ -33,7 +35,12 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
       handler: "annotator",
       runtime: Runtime.GO_1_X,
       ...functionProps,
+      environment: {
+        ...functionProps?.environment,
+        MACKEREL_APIKEY_PARAMETER_NAME: mackerelApiKey.parameterName,
+      },
     });
+    mackerelApiKey.grantRead(func);
 
     const rule = new Rule(this, "SubscribeEcsTaskStoppedRule", {
       eventPattern: {
