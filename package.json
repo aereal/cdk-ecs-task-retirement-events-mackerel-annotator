@@ -5,6 +5,8 @@
   "author": "aereal <aereal@aereal.org>",
   "license": "MIT",
   "devDependencies": {
+    "@aws-cdk/assert": "^1.22.0",
+    "@types/jest": "^25.1.1",
     "@types/node": "^13.5.1",
     "@typescript-eslint/eslint-plugin": "^2.18.0",
     "@typescript-eslint/parser": "^2.18.0",
@@ -12,7 +14,9 @@
     "eslint-config-prettier": "^6.10.0",
     "eslint-plugin-import": "^2.20.0",
     "eslint-plugin-prettier": "^3.1.2",
+    "jest": "^25.1.0",
     "prettier": "^1.19.1",
+    "ts-jest": "^25.0.0",
     "ts-node": "^8.6.2",
     "typescript": "^3.7.5"
   },
@@ -119,6 +123,24 @@
     }
   },
   "scripts": {
-    "lint": "eslint --ext .ts src/"
+    "lint": "eslint --ext .ts src/ test/",
+    "test": "jest"
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src",
+      "<rootDir>/test"
+    ],
+    "transform": {
+      "^.+\\.tsx?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }
