@@ -124,7 +124,8 @@
   },
   "scripts": {
     "lint": "eslint --ext .ts src/ test/",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc -p ."
   },
   "jest": {
     "roots": [
