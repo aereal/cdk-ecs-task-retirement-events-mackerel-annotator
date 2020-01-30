@@ -123,7 +123,7 @@
     }
   },
   "scripts": {
-    "lint": "eslint --ext .ts src/",
+    "lint": "eslint --ext .ts src/ test/",
     "test": "jest"
   },
   "jest": {
