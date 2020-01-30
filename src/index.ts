@@ -1,3 +1,1 @@
-import { MackerelAnnotatorApp } from "./app";
-
-MackerelAnnotatorApp.newFromContext().synth();
+export { EcsServiceEventsMackerelAnnotator } from "./resources/annotator-lambda";
