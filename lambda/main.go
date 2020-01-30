@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/aws/aws-lambda-go/events"
@@ -25,6 +26,9 @@ var mackerelAPIKey string
 
 func init() {
 	if err := loadMackerelApiKey(); err != nil {
+		panic(err)
+	}
+	if err := loadEcsGroupMapping(); err != nil {
 		panic(err)
 	}
 }
@@ -60,6 +64,18 @@ func loadMackerelApiKey() error {
 	return nil
 }
 
+type ecsGroupMapping map[string]mackerelRole
+
+var mapping = ecsGroupMapping{}
+
+func loadEcsGroupMapping() error {
+	dec := json.NewDecoder(strings.NewReader(os.Getenv("ECS_GROUP_MAPPING")))
+	if err := dec.Decode(&mapping); err != nil {
+		return fmt.Errorf("failed to load ECS_GROUP_MAPPING: %w", err)
+	}
+	return nil
+}
+
 func annotator(ctx context.Context, ev *events.CloudWatchEvent) error {
 	log.Printf("event=%#v", ev)
 	if ev.Source != "aws.ecs" {
@@ -80,7 +96,7 @@ func annotator(ctx context.Context, ev *events.CloudWatchEvent) error {
 	log.Printf("ECS task state change event (raw): %s", string(ev.Detail))
 	log.Printf("[decoded] ECS Task State Change Event: %#v", stateChangeEvent)
 
-	serviceRole, found := ecsGroupMapping[stateChangeEvent.Group]
+	serviceRole, found := mapping[stateChangeEvent.Group]
 	if !found {
 		return fmt.Errorf("no service/role mapping found for group: %q", stateChangeEvent.Group)
 	}
@@ -124,8 +140,6 @@ type mackerelRole struct {
 	Service string
 	Roles   []string
 }
-
-var ecsGroupMapping = map[string]*mackerelRole{}
 
 type TaskAttachmentDetail struct {
 	Name  string `json:"name"`

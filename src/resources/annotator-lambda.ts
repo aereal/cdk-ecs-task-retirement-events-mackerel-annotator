@@ -10,10 +10,18 @@ import { Rule } from "@aws-cdk/aws-events";
 import { LambdaFunction as InvokeLambdaFunction } from "@aws-cdk/aws-events-targets";
 import { IStringParameter } from "@aws-cdk/aws-ssm";
 
+interface ServiceRoles {
+  readonly service: string;
+  readonly roles: string[];
+}
+
+type EcsGroupServiceRolesMapping = Record<string, ServiceRoles>;
+
 interface EcsServiceEventsMackerelAnnotatorProps extends ResourceProps {
   readonly functionProps?: Omit<FunctionProps, "code" | "handler" | "runtime">;
   readonly clusterArnsToWatch?: string[];
   readonly mackerelApiKey: IStringParameter;
+  readonly ecsGroupServiceRolesMapping: EcsGroupServiceRolesMapping;
 }
 
 export class EcsServiceEventsMackerelAnnotator extends Resource {
@@ -24,7 +32,12 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
   ) {
     super(scope, id, props);
 
-    const { functionProps, clusterArnsToWatch, mackerelApiKey } = props;
+    const {
+      functionProps,
+      clusterArnsToWatch,
+      mackerelApiKey,
+      ecsGroupServiceRolesMapping,
+    } = props;
 
     const lambdaPath = resolve(
       join(__dirname, "..", "..", "dist", "annotator")
@@ -38,6 +51,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
       environment: {
         ...functionProps?.environment,
         MACKEREL_APIKEY_PARAMETER_NAME: mackerelApiKey.parameterName,
+        ECS_GROUP_MAPPING: JSON.stringify(ecsGroupServiceRolesMapping),
       },
     });
     mackerelApiKey.grantRead(func);
