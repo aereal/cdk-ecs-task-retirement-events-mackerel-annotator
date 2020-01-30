@@ -1,6 +1,6 @@
 {
   "name": "@aereal/cdk-ecs-task-retirement-events-mackerel-annotator",
-  "version": "1.0.0",
+  "version": "0.0.1-prerelease",
   "main": "built/index.js",
   "types": "built/index.d.ts",
   "author": "aereal <aereal@aereal.org>",
