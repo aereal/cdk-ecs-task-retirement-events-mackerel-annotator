@@ -26,6 +26,10 @@ jobs:
         run: make test
       - name: build
         run: make build
+      - uses: actions/upload-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator/annotator
   cdk:
     runs-on: ubuntu-latest
     steps:
