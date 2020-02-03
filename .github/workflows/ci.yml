@@ -102,10 +102,25 @@ jobs:
         env:
           NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
       - uses: actions/create-release@v1
+        id: create-release
         with:
           tag_name: ${{ steps.bump-version.outputs.tag }}
           release_name: ${{ steps.bump-version.outputs.tag }}
           draft: true
           prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: pack
+        id: yarn-pack
+        run: |
+          filename="$(cat package.json | jq -r '.name | gsub("@"; "") | gsub("/"; "-")')-${{ steps.bump-version.outputs.tag }}.tgz"
+          yarn pack --filename "$filename"
+          echo "::set-output name=asset_path::${filename}"
+      - uses: actions/upload-release-asset@v1.0.1
+        with:
+          upload_url: ${{ steps.create-release.outputs.upload_url }}
+          asset_name: ${{ steps.yarn-pack.outputs.asset_path }}
+          asset_path: ${{ steps.yarn-pack.outputs.asset_path }}
+          asset_content_type: application/gzip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
