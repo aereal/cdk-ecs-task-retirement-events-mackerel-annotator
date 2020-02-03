@@ -84,11 +84,10 @@ jobs:
           export GIT_AUTHOR_EMAIL="${GIT_COMMITTER_EMAIL}"
 
           git commit -m "Bump version to ${NEXT_VERSION}"
-          branch="release-${NEXT_VERSION}"
-          git checkout -b "$branch"
+          branch="$(git symbolic-ref --short HEAD)"
+          echo "branch=$branch"
           git tag "v${NEXT_VERSION}"
-          git fetch origin --prune # to avoid stale info error
-          git push --force-with-lease origin $branch # remove --force-with-lease if target branch is master
+          git push origin $branch
           git push --tags
         env:
           NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
