@@ -3,9 +3,9 @@
 name: CI
 on:
   pull_request:
-    push:
-      branches:
-        - master
+  push:
+    branches:
+      - master
 jobs:
   lambda:
     runs-on: ubuntu-latest
@@ -26,6 +26,10 @@ jobs:
         run: make test
       - name: build
         run: make build
+      - uses: actions/upload-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator/annotator
   cdk:
     runs-on: ubuntu-latest
     steps:
@@ -46,3 +50,54 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: test
         run: yarn test
+  release:
+    needs:
+      - cdk
+      - lambda
+    runs-on: ubuntu-latest
+    if: github.event == 'push'
+    steps:
+      - id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      -
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: install
+        run: yarn install --frozen-lockfile
+      - name: draft release
+        id: draft-release
+        run: yarn draft-release
+      - name: push version bump commit
+        id: bump-version
+        run: |
+          git add -u
+
+          export GIT_COMMITTER_NAME="${GITHUB_ACTOR}"
+          export GIT_COMMITTER_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+          export GIT_AUTHOR_NAME="${GIT_COMMITTER_NAME}"
+          export GIT_AUTHOR_EMAIL="${GIT_COMMITTER_EMAIL}"
+
+          git commit -m "Bump version to ${NEXT_VERSION}"
+          branch="$(git symbolic-ref --short HEAD)"
+          echo "branch=$branch"
+          tag="v${NEXT_VERSION}"
+          git tag "$tag"
+          echo "::set-output name=tag::${tag}"
+          git push origin $branch
+          git push --tags
+        env:
+          NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
+      - uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.bump-version.outputs.tag }}
+          release_name: ${{ steps.bump-version.outputs.tag }}
+          draft: true
+          prerelease: true
