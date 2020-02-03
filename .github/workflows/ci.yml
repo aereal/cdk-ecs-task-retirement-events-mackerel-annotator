@@ -75,7 +75,9 @@ jobs:
       - name: draft release
         id: draft-release
         run: yarn draft-release
-      - run: |
+      - name: push version bump commit
+        id: bump-version
+        run: |
           git add -u
 
           export GIT_COMMITTER_NAME="${GITHUB_ACTOR}"
@@ -86,8 +88,16 @@ jobs:
           git commit -m "Bump version to ${NEXT_VERSION}"
           branch="$(git symbolic-ref --short HEAD)"
           echo "branch=$branch"
-          git tag "v${NEXT_VERSION}"
+          tag="v${NEXT_VERSION}"
+          git tag "$tag"
+          echo "::set-output name=tag::${tag}"
           git push origin $branch
           git push --tags
         env:
           NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
+      - uses: actions/create-release@v1
+        with:
+          tag_name: ${{ steps.bump-version.outputs.tag }}
+          release_name: ${{ steps.bump-version.outputs.tag }}
+          draft: true
+          prerelease: true
