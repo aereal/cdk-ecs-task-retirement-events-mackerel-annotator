@@ -55,6 +55,7 @@ jobs:
       - cdk
       - lambda
     runs-on: ubuntu-latest
+    # if: ${{ github.event == 'push' }}
     steps:
       - id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -71,12 +72,22 @@ jobs:
           node-version: '12.x'
       - name: install
         run: yarn install --frozen-lockfile
-      - name: download lambda handler
-        uses: actions/download-artifact@v1
-        with:
-          name: annotator
-          path: dist/annotator
+      - name: draft release
+        id: draft-release
+        run: yarn draft-release
       - run: |
-          ls -lAF dist/annotator/annotator
-      - name: pack
-        run: yarn pack
+          git add -u
+
+          export GIT_COMMITTER_NAME="${GITHUB_ACTOR}"
+          export GIT_COMMITTER_EMAIL="${GITHUB_ACTOR}@users.noreply.github.com"
+          export GIT_AUTHOR_NAME="${GIT_COMMITTER_NAME}"
+          export GIT_AUTHOR_EMAIL="${GIT_COMMITTER_EMAIL}"
+
+          git commit -m "Bump version to ${NEXT_VERSION}"
+          branch="release-${NEXT_VERSION}"
+          git checkout -b "$branch"
+          git tag "v${NEXT_VERSION}"
+          git push origin $branch
+          git push --tags
+        env:
+          NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
