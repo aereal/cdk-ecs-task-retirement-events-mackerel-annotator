@@ -107,3 +107,5 @@ jobs:
           release_name: ${{ steps.bump-version.outputs.tag }}
           draft: true
           prerelease: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
