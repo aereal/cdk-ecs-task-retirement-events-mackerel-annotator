@@ -50,3 +50,33 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: test
         run: yarn test
+  release:
+    needs:
+      - cdk
+      - lambda
+    runs-on: ubuntu-latest
+    steps:
+      - id: yarn-cache
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v1
+        with:
+          path: ${{ steps.yarn-cache.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      -
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      - name: install
+        run: yarn install --frozen-lockfile
+      - name: download lambda handler
+        uses: actions/download-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator
+      - run: |
+          ls -lAF dist/annotator/annotator
+      - name: pack
+        run: yarn pack
