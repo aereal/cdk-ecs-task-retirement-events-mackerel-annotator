@@ -39,4 +39,26 @@ describe("EcsServiceEventsMackerelAnnotator", () => {
     });
     expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
   });
+
+  test("pass mapping", () => {
+    const stack = new Stack();
+    new EcsServiceEventsMackerelAnnotator(stack, "Annotator", {
+      mackerelApiKey: StringParameter.fromStringParameterName(
+        stack,
+        "MackerelAPIKey",
+        "dummy-mackerel-api-key"
+      ),
+      ecsGroupServiceRolesMapping: {
+        [`service:my-home-service`]: {
+          service: "My-Home",
+          roles: ["app"],
+        },
+        [`service:my-office-service`]: {
+          service: "My-Office",
+          roles: ["app", "proxy"],
+        },
+      },
+    });
+    expect(SynthUtils.toCloudFormation(stack)).toMatchSnapshot();
+  });
 });
