@@ -151,6 +151,11 @@
       "js",
       "jsx",
       "json"
-    ]
+    ],
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "./tsconfig.develop.json"
+      }
+    }
   }
 }
