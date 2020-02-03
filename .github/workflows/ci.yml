@@ -55,7 +55,7 @@ jobs:
       - cdk
       - lambda
     runs-on: ubuntu-latest
-    if: ${{ github.event == 'push' }}
+    if: github.event == 'push'
     steps:
       - id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
