@@ -1,5 +1,5 @@
 import { join, resolve } from "path";
-import { Resource, ResourceProps, Construct } from "@aws-cdk/core";
+import { Resource, ResourceProps, Construct, Arn } from "@aws-cdk/core";
 import {
   Function as LambdaFunction,
   Code,
@@ -9,19 +9,25 @@ import {
 import { Rule } from "@aws-cdk/aws-events";
 import { LambdaFunction as InvokeLambdaFunction } from "@aws-cdk/aws-events-targets";
 import { IStringParameter } from "@aws-cdk/aws-ssm";
+import { ICluster, IService } from "@aws-cdk/aws-ecs";
 
-interface ServiceRoles {
+export interface MackerelServiceRoles {
   readonly service: string;
   readonly roles: string[];
 }
 
-type EcsGroupServiceRolesMapping = Record<string, ServiceRoles>;
+export interface MackerelServiceRolesMapping {
+  readonly serviceRoles: MackerelServiceRoles;
+  readonly ecsService: IService;
+}
+
+type EcsGroupServiceRolesMapping = Record<string, MackerelServiceRoles>;
 
 interface EcsServiceEventsMackerelAnnotatorProps extends ResourceProps {
   readonly functionProps?: Omit<FunctionProps, "code" | "handler" | "runtime">;
-  readonly clusterArnsToWatch?: string[];
+  readonly clustersToWatch?: ICluster[];
   readonly mackerelApiKey: IStringParameter;
-  readonly ecsGroupServiceRolesMapping: EcsGroupServiceRolesMapping;
+  readonly mackerelServiceRolesMappings: MackerelServiceRolesMapping[];
 }
 
 export class EcsServiceEventsMackerelAnnotator extends Resource {
@@ -34,14 +40,16 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
 
     const {
       functionProps,
-      clusterArnsToWatch,
+      clustersToWatch,
       mackerelApiKey,
-      ecsGroupServiceRolesMapping,
+      mackerelServiceRolesMappings,
     } = props;
 
     const lambdaPath = resolve(
       join(__dirname, "..", "..", "dist", "annotator")
     );
+
+    const mapping = createMapping(mackerelServiceRolesMappings);
 
     const func = new LambdaFunction(this, "Function", {
       code: Code.fromAsset(lambdaPath, {}),
@@ -51,7 +59,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
       environment: {
         ...functionProps?.environment,
         MACKEREL_APIKEY_PARAMETER_NAME: mackerelApiKey.parameterName,
-        ECS_GROUP_MAPPING: JSON.stringify(ecsGroupServiceRolesMapping),
+        ECS_GROUP_MAPPING: JSON.stringify(mapping),
       },
     });
     mackerelApiKey.grantRead(func);
@@ -61,7 +69,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
         detailType: ["ECS Task State Change"],
         source: ["aws.ecs"],
         detail: {
-          clusterArn: clusterArnsToWatch,
+          clusterArn: clustersToWatch?.map(cluster => cluster.clusterArn),
           lastStatus: ["STOPPED"],
         },
       },
@@ -69,3 +77,27 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
     rule.addTarget(new InvokeLambdaFunction(func));
   }
 }
+
+const createMapping = (
+  mappings: readonly MackerelServiceRolesMapping[]
+): EcsGroupServiceRolesMapping => {
+  const obj: EcsGroupServiceRolesMapping = {};
+  for (const { ecsService, serviceRoles } of mappings) {
+    const { resourceName } = Arn.parse(ecsService.serviceArn);
+    if (resourceName === undefined) {
+      throw new Error(
+        `[BUG] Invalid ECS Service ARN: ${ecsService.serviceArn}`
+      );
+    }
+
+    const key = `service:${resourceName}`;
+    if (obj[key] !== undefined) {
+      throw new Error(
+        `Duplicated mapping for ECS service: ${ecsService.serviceArn}`
+      );
+    }
+
+    obj[key] = serviceRoles;
+  }
+  return obj;
+};
