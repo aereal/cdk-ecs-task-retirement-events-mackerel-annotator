@@ -9,6 +9,7 @@ import {
 import { Rule } from "@aws-cdk/aws-events";
 import { LambdaFunction as InvokeLambdaFunction } from "@aws-cdk/aws-events-targets";
 import { IStringParameter } from "@aws-cdk/aws-ssm";
+import { ICluster } from "@aws-cdk/aws-ecs";
 
 interface ServiceRoles {
   readonly service: string;
@@ -19,7 +20,7 @@ type EcsGroupServiceRolesMapping = Record<string, ServiceRoles>;
 
 interface EcsServiceEventsMackerelAnnotatorProps extends ResourceProps {
   readonly functionProps?: Omit<FunctionProps, "code" | "handler" | "runtime">;
-  readonly clusterArnsToWatch?: string[];
+  readonly clustersToWatch?: ICluster[];
   readonly mackerelApiKey: IStringParameter;
   readonly ecsGroupServiceRolesMapping: EcsGroupServiceRolesMapping;
 }
@@ -34,7 +35,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
 
     const {
       functionProps,
-      clusterArnsToWatch,
+      clustersToWatch,
       mackerelApiKey,
       ecsGroupServiceRolesMapping,
     } = props;
@@ -61,7 +62,7 @@ export class EcsServiceEventsMackerelAnnotator extends Resource {
         detailType: ["ECS Task State Change"],
         source: ["aws.ecs"],
         detail: {
-          clusterArn: clusterArnsToWatch,
+          clusterArn: clustersToWatch?.map(cluster => cluster.clusterArn),
           lastStatus: ["STOPPED"],
         },
       },
