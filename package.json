@@ -134,7 +134,8 @@
   "scripts": {
     "lint": "eslint --ext .ts src/ test/",
     "test": "jest",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "draft-release": "ts-node -P ./tsconfig.develop.json ./tools/draft-release.ts"
   },
   "jest": {
     "roots": [
