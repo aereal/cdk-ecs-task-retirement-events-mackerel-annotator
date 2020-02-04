@@ -1,1 +1,1 @@
-export { EcsServiceEventsMackerelAnnotator } from "./resources/annotator-lambda";
+export * from "./resources/annotator-lambda";
