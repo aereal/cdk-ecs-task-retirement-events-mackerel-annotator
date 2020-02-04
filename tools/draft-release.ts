@@ -12,8 +12,8 @@ const parsePackageJSON = async (path: string): Promise<PackageJSON> => {
   return JSON.parse(buf.toString("utf8"));
 };
 
-const bumpToNextPrerelease = async (prevVersion: SemVer): Promise<SemVer> => {
-  const nextVersion = prevVersion.inc("prerelease", "prerelease");
+const bumpToNextRelease = async (prevVersion: SemVer): Promise<SemVer> => {
+  const nextVersion = prevVersion.inc("patch");
   return new SemVer(nextVersion.format());
 };
 
@@ -31,7 +31,7 @@ const main = async (): Promise<void> => {
   if (pkgJSON.version === undefined) {
     throw new Error(`version field not found in ${path}`);
   }
-  const nextVersion = await bumpToNextPrerelease(new SemVer(pkgJSON.version));
+  const nextVersion = await bumpToNextRelease(new SemVer(pkgJSON.version));
   process.stderr.write(`Bump version (${pkgJSON.version}) to ${nextVersion}\n`);
   await updatePackageJSON(path, { ...pkgJSON, version: nextVersion.format() });
   process.stdout.write(`::set-output name=next-version::${nextVersion}\n`);
