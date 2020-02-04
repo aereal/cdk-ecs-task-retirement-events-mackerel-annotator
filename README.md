@@ -1,3 +1,5 @@
+![npm-badge][npm-badge]
+
 # @aereal/cdk-ecs-task-retirement-events-mackerel-annotator
 
 cdk-ecs-task-retirement-events-mackerel-annotator provides [AWS CDK][] resource class consists of Lambda function that annotates ECS task stop event
@@ -44,3 +46,4 @@ new EcsServiceEventsMackerelAnnotator(stack, "Annotator", {
 ```
 
 [AWS CDK]: https://docs.aws.amazon.com/cdk/latest/guide/home.html
+[npm-badge]: https://img.shields.io/npm/v/@aereal/cdk-ecs-task-retirement-events-mackerel-annotator
