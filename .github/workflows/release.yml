@@ -1,13 +1,11 @@
 ---
 
-name: CI
+name: Release
 on:
-  pull_request:
-  push:
-    branches:
-      - master
-jobs:
-  lambda:
+  release:
+    types:
+      - created
+  build-lambda:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +24,13 @@ jobs:
         run: make test
       - name: build
         run: make build
-  cdk:
+      - uses: actions/upload-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator/annotator
+  release:
+    needs:
+      - build-lambda
     runs-on: ubuntu-latest
     steps:
       - id: yarn-cache
@@ -44,5 +48,17 @@ jobs:
           node-version: '12.x'
       - name: install
         run: yarn install --frozen-lockfile
-      - name: test
-        run: yarn test
+      - name: draft release
+        id: draft-release
+        run: yarn draft-release
+      - name: fetch lambda artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator
+      - name: pack
+        id: yarn-pack
+        run: |
+          filename="$(cat package.json | jq -r '.name | gsub("@"; "") | gsub("/"; "-")')-${{ steps.bump-version.outputs.tag }}.tgz"
+          yarn pack --filename "$filename"
+          echo "::set-output name=asset_path::${filename}"
