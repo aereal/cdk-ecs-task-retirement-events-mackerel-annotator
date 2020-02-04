@@ -48,17 +48,13 @@ on:
           node-version: '12.x'
       - name: install
         run: yarn install --frozen-lockfile
-      - name: draft release
-        id: draft-release
-        run: yarn draft-release
       - name: fetch lambda artifact
         uses: actions/download-artifact@v1
         with:
           name: annotator
           path: dist/annotator
-      - name: pack
-        id: yarn-pack
+      - name: publish
         run: |
-          filename="$(cat package.json | jq -r '.name | gsub("@"; "") | gsub("/"; "-")')-${{ steps.bump-version.outputs.tag }}.tgz"
-          yarn pack --filename "$filename"
-          echo "::set-output name=asset_path::${filename}"
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
