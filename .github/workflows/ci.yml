@@ -60,7 +60,6 @@ jobs:
       - name: dump event
         run: |
           echo "$CONTEXT_GITHUB" | jq .
-          echo "is push = ${{ github.event == 'push' }}"
         env:
           CONTEXT_GITHUB: ${{ toJson(github) }}
       - id: yarn-cache
@@ -92,12 +91,10 @@ jobs:
           export GIT_AUTHOR_EMAIL="${GIT_COMMITTER_EMAIL}"
 
           git commit -m "Bump version to ${NEXT_VERSION}"
-          branch="$(git symbolic-ref --short HEAD)"
-          echo "branch=$branch"
           tag="v${NEXT_VERSION}"
           git tag "$tag"
           echo "::set-output name=tag::${tag}"
-          git push origin $branch
+          git push origin master
           git push --tags
         env:
           NEXT_VERSION: ${{ steps.draft-release.outputs.next-version }}
