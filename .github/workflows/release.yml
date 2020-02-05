@@ -58,6 +58,8 @@ jobs:
         with:
           name: annotator
           path: dist/annotator
+      - run: |
+          chmod +x ./dist/annotator/annotator
       - name: publish
         run: |
           npm publish --access public
