@@ -1,0 +1,14 @@
+---
+
+name: Deployment
+on:
+  deployment
+jobs:
+  build-lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - name: dump payload
+        env:
+          PAYLOAD: ${{ toJson(github) }}
+        run: |
+          echo "$PAYLOAD" | jq .
