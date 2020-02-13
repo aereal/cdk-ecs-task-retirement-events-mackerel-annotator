@@ -60,3 +60,7 @@ jobs:
         env:
           PAYLOAD: ${{ toJson(github) }}
           DO_CHANGE: "1"
+          GIT_COMMITTER_NAME: ${{ github.actor }}
+          GIT_COMMITTER_EMAIL: ${{ github.actor }}@users.noreply.github.com
+          GIT_AUTHOR_NAME: ${{ github.actor }}
+          GIT_AUTHOR_EMAIL: ${{ github.actor }}@users.noreply.github.com
