@@ -158,5 +158,5 @@
     "draft-release": "ts-node -P ./tsconfig.develop.json ./tools/draft-release.ts"
   },
   "types": "built/index.d.ts",
-  "version": "0.1.6"
+  "version": "0.1.7"
 }
