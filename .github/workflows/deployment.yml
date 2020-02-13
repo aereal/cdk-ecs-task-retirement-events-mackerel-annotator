@@ -35,12 +35,6 @@ jobs:
           PAYLOAD: ${{ toJson(github) }}
         run: |
           echo "$PAYLOAD" | jq .
-      - name: fetch deploy script
-        uses: actions/download-artifact@v1
-        with:
-          name: deploy
-          path: deploy
-      - run: chmod +x ./deploy
       - id: yarn-cache
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - uses: actions/checkout@v2
@@ -55,6 +49,12 @@ jobs:
         with:
           node-version: '12.x'
           registry-url: 'https://registry.npmjs.org'
+      - name: fetch deploy script
+        uses: actions/download-artifact@v1
+        with:
+          name: deploy
+          path: deploy
+      - run: chmod +x ./deploy
       - name: run deploy
         run: echo "$PAYLOAD" | jq .event | ./deploy
         env:
