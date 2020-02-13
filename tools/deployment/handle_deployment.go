@@ -57,6 +57,10 @@ func handleEvent(input io.Reader) error {
 		return fmt.Errorf("failed to publish package to NPM: %w", err)
 	}
 
+	if err := pushBumpedVersion(dryRun, "origin", deployment.GetRef()); err != nil {
+		return fmt.Errorf("failed to push: %w", err)
+	}
+
 	return nil
 }
 
