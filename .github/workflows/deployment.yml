@@ -25,10 +25,34 @@ jobs:
         with:
           name: deploy
           path: deploy
+  build-lambda:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v1.1.2
+        with:
+          go-version: 1.13.x
+      - uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+      - name: install deps
+        run: make deps
+      - name: test
+        run: make test
+      - name: build
+        run: make build
+      - uses: actions/upload-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator/annotator
   deploy:
     runs-on: ubuntu-latest
     needs:
       - build
+      - build-lambda
     steps:
       - name: dump payload
         env:
@@ -55,6 +79,13 @@ jobs:
           name: deploy
           path: deploy
       - run: chmod +x ./deploy/deploy
+      - name: fetch lambda artifact
+        uses: actions/download-artifact@v1
+        with:
+          name: annotator
+          path: dist/annotator
+      - run: |
+          chmod +x ./dist/annotator/annotator
       - name: run deploy
         run: echo "$PAYLOAD" | jq .event | ./deploy/deploy
         env:
