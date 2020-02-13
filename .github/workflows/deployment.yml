@@ -54,9 +54,9 @@ jobs:
         with:
           name: deploy
           path: deploy
-      - run: chmod +x ./deploy
+      - run: chmod +x ./deploy/deploy
       - name: run deploy
-        run: echo "$PAYLOAD" | jq .event | ./deploy
+        run: echo "$PAYLOAD" | jq .event | ./deploy/deploy
         env:
           PAYLOAD: ${{ toJson(github) }}
           DO_CHANGE: "1"
