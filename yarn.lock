@@ -89,7 +89,7 @@
     "@aws-cdk/core" "1.45.0"
     constructs "^3.0.2"
 
-"@aws-cdk/aws-batch@1.45.0":
+"@aws-cdk/aws-batch@1.45.0", "@aws-cdk/aws-batch@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-batch/-/aws-batch-1.45.0.tgz#1a9099b54adb068047a2c1bdb583cfb89bfcce53"
   integrity sha512-NyCloAv71lG/XIqTLfmK7Z1tP5ij27jy0NktOuhfxuLH+91xudW4Cxf/VkXGuixPKVbB6L4BNTssi+3k6AQbBg==
@@ -189,7 +189,7 @@
     "@aws-cdk/core" "1.45.0"
     constructs "^3.0.2"
 
-"@aws-cdk/aws-cognito@1.45.0":
+"@aws-cdk/aws-cognito@1.45.0", "@aws-cdk/aws-cognito@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-cognito/-/aws-cognito-1.45.0.tgz#3f27d91e4267ba6984319e1abc961d97cc264dc9"
   integrity sha512-SYAis/bVoW7wem90EB7c5Nic8IGvCh12LvNN+oP5Vx+YR+1h2ksjnsvg0Tr2Xl8CS8yw7HmnkkqNJKkHm1V0Uw==
@@ -334,7 +334,7 @@
     "@aws-cdk/region-info" "1.45.0"
     constructs "^3.0.2"
 
-"@aws-cdk/aws-kinesis@1.45.0":
+"@aws-cdk/aws-kinesis@1.45.0", "@aws-cdk/aws-kinesis@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-kinesis/-/aws-kinesis-1.45.0.tgz#1358f9d995bb46395d4b4c5495f5a4a115cb126c"
   integrity sha512-sxk9rsU9xtALYF8CmcQ2SoG9sXicIv+cj3i5ylZLSsBL0qvVAZMv1RfeZWSbgd7aDtq7BJfrE09ZgE1C6v5hUw==
@@ -524,7 +524,7 @@
     "@aws-cdk/core" "1.45.0"
     constructs "^3.0.2"
 
-"@aws-cdk/cdk-assets-schema@1.45.0":
+"@aws-cdk/cdk-assets-schema@1.45.0", "@aws-cdk/cdk-assets-schema@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/cdk-assets-schema/-/cdk-assets-schema-1.45.0.tgz#794a6f9a9154874a9d172a4df308bddba5281dfe"
   integrity sha512-HvS9IN0RTIwJvldOLj/0FsWSj1h3jqeT9sfNdAW0g7FeFSPu3QtdYeDcSGrOo/4fPXsRFV4bcMqoEEph3x9MgQ==
@@ -538,7 +538,7 @@
   dependencies:
     md5 "^2.2.1"
 
-"@aws-cdk/cloud-assembly-schema@1.45.0":
+"@aws-cdk/cloud-assembly-schema@1.45.0", "@aws-cdk/cloud-assembly-schema@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/cloud-assembly-schema/-/cloud-assembly-schema-1.45.0.tgz#59504ba3df5263d283a7de61bf0f0c7284d395eb"
   integrity sha512-MoQ8580BJYDKzWHNPbn/WiB82A1JdZJXkZ/W0mwR6mi37DOJ6jbycyhGXA9aARw5iNIxqTEAXqGifrUI1ILG+w==
@@ -569,7 +569,7 @@
     constructs "^3.0.2"
     minimatch "^3.0.4"
 
-"@aws-cdk/custom-resources@1.45.0":
+"@aws-cdk/custom-resources@1.45.0", "@aws-cdk/custom-resources@^1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/custom-resources/-/custom-resources-1.45.0.tgz#c461faee1135e10876eb7ff5c7020336196fa193"
   integrity sha512-Du19BhdyOUqO6zF0Aw+wIGCVZhKzyH3i1Lq6Z7tqpw/DKo4wqH1od8EY3UG+/ebPxklX8wdbBRFbUVL/AHecHg==
@@ -1843,7 +1843,7 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-constructs@^3.0.2:
+constructs@^3.0.2, constructs@^3.0.3:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.0.3.tgz#76687d6e3783b0b6864d72aaae5b0bacd824d52e"
   integrity sha512-JrYLpTlz92Un1jxkwoGiOiGoDjzIWtxo64sLC5FD4mQN1H9mAqZNvgxWYWaJIiWUXNkl5L5sO3GFf6peTj7UMQ==
