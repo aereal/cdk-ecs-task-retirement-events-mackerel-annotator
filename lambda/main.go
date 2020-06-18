@@ -12,7 +12,6 @@ import (
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go-v2/aws"
-	"github.com/aws/aws-sdk-go-v2/aws/endpoints"
 	"github.com/aws/aws-sdk-go-v2/aws/external"
 	"github.com/aws/aws-sdk-go-v2/service/ssm"
 	mackerel "github.com/mackerelio/mackerel-client-go"
@@ -46,7 +45,7 @@ func loadMackerelApiKey() error {
 	if err != nil {
 		return fmt.Errorf("cannot load default aws credentials: %w", err)
 	}
-	cfg.Region = endpoints.ApNortheast1RegionID
+	cfg.Region = "ap-northeast-1"
 	client := ssm.New(cfg)
 	req := client.GetParameterRequest(&ssm.GetParameterInput{
 		Name:           aws.String(parameterName),
