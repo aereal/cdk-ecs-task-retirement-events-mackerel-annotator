@@ -4,7 +4,7 @@ go 1.13
 
 require (
 	github.com/aws/aws-lambda-go v1.17.0
-	github.com/aws/aws-sdk-go-v2 v0.23.0
+	github.com/aws/aws-sdk-go-v2 v0.28.0
 	github.com/google/go-github/v29 v29.0.3
 	github.com/kr/pretty v0.2.0 // indirect
 	github.com/mackerelio/mackerel-client-go v0.10.1
