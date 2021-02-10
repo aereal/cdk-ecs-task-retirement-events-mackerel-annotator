@@ -83,14 +83,8 @@ const createMapping = (
 ): EcsGroupServiceRolesMapping => {
   const obj: EcsGroupServiceRolesMapping = {};
   for (const { ecsService, serviceRoles } of mappings) {
-    const { resourceName } = Arn.parse(ecsService.serviceArn);
-    if (resourceName === undefined) {
-      throw new Error(
-        `[BUG] Invalid ECS Service ARN: ${ecsService.serviceArn}`
-      );
-    }
+    const key = `service:${ecsService.serviceName}`;
 
-    const key = `service:${resourceName}`;
     if (obj[key] !== undefined) {
       throw new Error(
         `Duplicated mapping for ECS service: ${ecsService.serviceArn}`

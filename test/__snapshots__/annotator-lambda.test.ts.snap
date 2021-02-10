@@ -3,16 +3,16 @@
 exports[`EcsServiceEventsMackerelAnnotator pass clusters 1`] = `
 Object {
   "Parameters": Object {
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0ArtifactHash4A934180": Object {
-      "Description": "Artifact hash for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eArtifactHashA7EE33C1": Object {
+      "Description": "Artifact hash for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF": Object {
-      "Description": "S3 bucket for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0": Object {
+      "Description": "S3 bucket for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821": Object {
-      "Description": "S3 key for asset version \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515": Object {
+      "Description": "S3 key for asset version \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
     "MackerelAPIKeyParameter": Object {
@@ -29,7 +29,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF",
+            "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -42,7 +42,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -55,7 +55,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -81,25 +81,6 @@ Object {
         "Runtime": "go1.x",
       },
       "Type": "AWS::Lambda::Function",
-    },
-    "AnnotatorFunctionAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A9D21185EA": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorFunction7CC049DA",
-            "Arn",
-          ],
-        },
-        "Principal": "events.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
     },
     "AnnotatorFunctionServiceRole39637D60": Object {
       "Properties": Object {
@@ -176,6 +157,25 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "AnnotatorSubscribeEcsTaskStoppedRuleAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A92CF13183": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorFunction7CC049DA",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
     },
     "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D": Object {
       "Properties": Object {
@@ -227,7 +227,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc",
+            "Value": "Default/Cluster/Vpc",
           },
         ],
       },
@@ -238,7 +238,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc",
+            "Value": "Default/Cluster/Vpc",
           },
         ],
       },
@@ -261,7 +261,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet1",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet1",
           },
         ],
         "VpcId": Object {
@@ -304,7 +304,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet1",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet1",
           },
         ],
         "VpcId": Object {
@@ -330,7 +330,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet2",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet2",
           },
         ],
         "VpcId": Object {
@@ -373,7 +373,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet2",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet2",
           },
         ],
         "VpcId": Object {
@@ -403,7 +403,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
       },
@@ -423,7 +423,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
       },
@@ -434,7 +434,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
         "VpcId": Object {
@@ -477,7 +477,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
         "VpcId": Object {
@@ -507,7 +507,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
       },
@@ -527,7 +527,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
       },
@@ -538,7 +538,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
         "VpcId": Object {
@@ -581,7 +581,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
         "VpcId": Object {
@@ -608,16 +608,16 @@ Object {
 exports[`EcsServiceEventsMackerelAnnotator pass mapping 1`] = `
 Object {
   "Parameters": Object {
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0ArtifactHash4A934180": Object {
-      "Description": "Artifact hash for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eArtifactHashA7EE33C1": Object {
+      "Description": "Artifact hash for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF": Object {
-      "Description": "S3 bucket for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0": Object {
+      "Description": "S3 bucket for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821": Object {
-      "Description": "S3 key for asset version \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515": Object {
+      "Description": "S3 key for asset version \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
     "MackerelAPIKeyParameter": Object {
@@ -634,7 +634,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF",
+            "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -647,7 +647,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -660,7 +660,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -678,50 +678,16 @@ Object {
                 Array [
                   "{\\"service:",
                   Object {
-                    "Fn::Select": Array [
-                      1,
-                      Object {
-                        "Fn::Split": Array [
-                          "/",
-                          Object {
-                            "Fn::Select": Array [
-                              5,
-                              Object {
-                                "Fn::Split": Array [
-                                  ":",
-                                  Object {
-                                    "Ref": "MyHomeService117651CF",
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
+                    "Fn::GetAtt": Array [
+                      "MyHomeService117651CF",
+                      "Name",
                     ],
                   },
                   "\\":{\\"service\\":\\"My-Home\\",\\"roles\\":[\\"app\\"]},\\"service:",
                   Object {
-                    "Fn::Select": Array [
-                      1,
-                      Object {
-                        "Fn::Split": Array [
-                          "/",
-                          Object {
-                            "Fn::Select": Array [
-                              5,
-                              Object {
-                                "Fn::Split": Array [
-                                  ":",
-                                  Object {
-                                    "Ref": "MyOfficeService83694EBE",
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
+                    "Fn::GetAtt": Array [
+                      "MyOfficeService83694EBE",
+                      "Name",
                     ],
                   },
                   "\\":{\\"service\\":\\"My-Office\\",\\"roles\\":[\\"app\\",\\"proxy\\"]}}",
@@ -741,25 +707,6 @@ Object {
         "Runtime": "go1.x",
       },
       "Type": "AWS::Lambda::Function",
-    },
-    "AnnotatorFunctionAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A9D21185EA": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorFunction7CC049DA",
-            "Arn",
-          ],
-        },
-        "Principal": "events.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
     },
     "AnnotatorFunctionServiceRole39637D60": Object {
       "Properties": Object {
@@ -837,6 +784,25 @@ Object {
       },
       "Type": "AWS::IAM::Policy",
     },
+    "AnnotatorSubscribeEcsTaskStoppedRuleAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A92CF13183": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorFunction7CC049DA",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
     "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D": Object {
       "Properties": Object {
         "EventPattern": Object {
@@ -879,7 +845,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc",
+            "Value": "Default/Cluster/Vpc",
           },
         ],
       },
@@ -890,7 +856,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc",
+            "Value": "Default/Cluster/Vpc",
           },
         ],
       },
@@ -913,7 +879,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet1",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet1",
           },
         ],
         "VpcId": Object {
@@ -956,7 +922,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet1",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet1",
           },
         ],
         "VpcId": Object {
@@ -982,7 +948,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet2",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet2",
           },
         ],
         "VpcId": Object {
@@ -1025,7 +991,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PrivateSubnet2",
+            "Value": "Default/Cluster/Vpc/PrivateSubnet2",
           },
         ],
         "VpcId": Object {
@@ -1055,7 +1021,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
       },
@@ -1075,7 +1041,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
       },
@@ -1086,7 +1052,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
         "VpcId": Object {
@@ -1129,7 +1095,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet1",
+            "Value": "Default/Cluster/Vpc/PublicSubnet1",
           },
         ],
         "VpcId": Object {
@@ -1159,7 +1125,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
       },
@@ -1179,7 +1145,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
       },
@@ -1190,7 +1156,7 @@ Object {
         "Tags": Array [
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
         "VpcId": Object {
@@ -1233,7 +1199,7 @@ Object {
           },
           Object {
             "Key": "Name",
-            "Value": "Cluster/Vpc/PublicSubnet2",
+            "Value": "Default/Cluster/Vpc/PublicSubnet2",
           },
         ],
         "VpcId": Object {
@@ -1295,7 +1261,7 @@ Object {
     },
     "MyHomeServiceSecurityGroupE94BBA80": Object {
       "Properties": Object {
-        "GroupDescription": "MyHomeService/SecurityGroup",
+        "GroupDescription": "Default/MyHomeService/SecurityGroup",
         "SecurityGroupEgress": Array [
           Object {
             "CidrIp": "0.0.0.0/0",
@@ -1351,7 +1317,7 @@ Object {
     },
     "MyOfficeServiceSecurityGroupF0A92622": Object {
       "Properties": Object {
-        "GroupDescription": "MyOfficeService/SecurityGroup",
+        "GroupDescription": "Default/MyOfficeService/SecurityGroup",
         "SecurityGroupEgress": Array [
           Object {
             "CidrIp": "0.0.0.0/0",
@@ -1414,16 +1380,16 @@ Object {
 exports[`EcsServiceEventsMackerelAnnotator snapshot 1`] = `
 Object {
   "Parameters": Object {
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0ArtifactHash4A934180": Object {
-      "Description": "Artifact hash for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eArtifactHashA7EE33C1": Object {
+      "Description": "Artifact hash for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF": Object {
-      "Description": "S3 bucket for asset \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0": Object {
+      "Description": "S3 bucket for asset \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
-    "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821": Object {
-      "Description": "S3 key for asset version \\"1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0\\"",
+    "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515": Object {
+      "Description": "S3 key for asset version \\"40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2e\\"",
       "Type": "String",
     },
     "MackerelAPIKeyParameter": Object {
@@ -1440,7 +1406,7 @@ Object {
       "Properties": Object {
         "Code": Object {
           "S3Bucket": Object {
-            "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3Bucket5EA66AEF",
+            "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3Bucket5BB01DE0",
           },
           "S3Key": Object {
             "Fn::Join": Array [
@@ -1453,7 +1419,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -1466,7 +1432,7 @@ Object {
                       "Fn::Split": Array [
                         "||",
                         Object {
-                          "Ref": "AssetParameters1ebc9d3ac2033816c4abb63e4afd69d350b4aba8704cc9236b82ea520b74f4b0S3VersionKeyD171B821",
+                          "Ref": "AssetParameters40c290f9a0072acee82c7d26778e4cafbc89b3b5222972abfa39ec15231c3c2eS3VersionKey40FCB515",
                         },
                       ],
                     },
@@ -1492,25 +1458,6 @@ Object {
         "Runtime": "go1.x",
       },
       "Type": "AWS::Lambda::Function",
-    },
-    "AnnotatorFunctionAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A9D21185EA": Object {
-      "Properties": Object {
-        "Action": "lambda:InvokeFunction",
-        "FunctionName": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorFunction7CC049DA",
-            "Arn",
-          ],
-        },
-        "Principal": "events.amazonaws.com",
-        "SourceArn": Object {
-          "Fn::GetAtt": Array [
-            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
-            "Arn",
-          ],
-        },
-      },
-      "Type": "AWS::Lambda::Permission",
     },
     "AnnotatorFunctionServiceRole39637D60": Object {
       "Properties": Object {
@@ -1587,6 +1534,25 @@ Object {
         ],
       },
       "Type": "AWS::IAM::Policy",
+    },
+    "AnnotatorSubscribeEcsTaskStoppedRuleAllowEventRuleAnnotatorSubscribeEcsTaskStoppedRule22DC68A92CF13183": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorFunction7CC049DA",
+            "Arn",
+          ],
+        },
+        "Principal": "events.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::GetAtt": Array [
+            "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
     },
     "AnnotatorSubscribeEcsTaskStoppedRuleD535D00D": Object {
       "Properties": Object {
