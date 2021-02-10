@@ -38,12 +38,15 @@ new EcsServiceEventsMackerelAnnotator(stack, "Annotator", {
       version: 1,
     }
   ),
-  ecsGroupServiceRolesMapping: {
-    [`service:${service.serviceName}`]: {
-      service: "My-App",
-      roles: ["app"],
+  mackerelServiceRolesMappings: [
+    {
+      ecsService: service,
+      serviceRoles: {
+        service: "My-App",
+        roles: ["app"],
+      },
     },
-  },
+  ],
 });
 ```
 
