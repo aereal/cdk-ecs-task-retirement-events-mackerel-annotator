@@ -49,7 +49,7 @@
     "@aws-cdk/cx-api": "^1.88.0",
     "@aws-cdk/region-info": "^1.88.0",
     "@types/jest": "^26.0.10",
-    "@types/node": "^13.5.1",
+    "@types/node": "^13.13.52",
     "@types/semver": "^7.3.3",
     "@typescript-eslint/eslint-plugin": "^3.3.0",
     "@typescript-eslint/parser": "^3.3.0",
