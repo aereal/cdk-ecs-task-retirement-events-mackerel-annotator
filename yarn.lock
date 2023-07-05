@@ -1968,10 +1968,10 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
-constructs@^3.0.3, constructs@^3.2.0:
-  version "3.2.63"
-  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.2.63.tgz#928edff702a31d0e001b44d6f60263f8e2254c6c"
-  integrity sha512-9PWsvpIFBIpt1cerVA3RfXOGpzIfKJboEmKPatsm7TTqb4qhoGLPLOxWm1zs1E1cUUCyWdLFT+ECv8MUaABc+g==
+constructs@^3.2.0, constructs@^3.4.344:
+  version "3.4.344"
+  resolved "https://registry.yarnpkg.com/constructs/-/constructs-3.4.344.tgz#731b2621e7dd611f303295a777ab7f90437ba464"
+  integrity sha512-Qq3upn44oGdvgasHUKWVFsrynyYrtVRd9fd8ko9cJOrFzx9eCm3iI4bhBryQqaISdausbTYUOXmoEe/YSJ16Nw==
 
 contains-path@^0.1.0:
   version "0.1.0"
